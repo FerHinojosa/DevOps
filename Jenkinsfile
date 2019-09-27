@@ -9,6 +9,7 @@ pipeline {
                 echo 'Building..'
                 sh 'pwd'
                 sh 'ls -al'
+                sh './gradlew build'
             }
         }
     }
