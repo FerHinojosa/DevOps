@@ -15,12 +15,12 @@ pipeline {
                 }
 
             }
-        post {
-                                 always{
-                                     junit '/build/test-results/test/*.xml'
-                                 }
-                             }
-        }
-    }
+            post {
+              always{
+                    junit '/build/test-results/test/*.xml'
+                 }
+             }
+            }
+}
 //}
 //}
