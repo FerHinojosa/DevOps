@@ -7,7 +7,7 @@ pipeline {
             }
             steps {
                 echo 'Building..'
-                //sh 'chmod +x gradlew'
+                sh 'chmod +x gradlew'
                 //sh 'pwd'
                 sh './gradlew clean'
                 post {
