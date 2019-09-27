@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="RunTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-09-27T20:19:15" hostname="C303-14" time="0.036">
+  <properties/>
+  <testcase names="RunTest" classname="RunTest" time="0.036"/>
+  <system-out><![CDATA[HelloWorld
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+
+
