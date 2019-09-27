@@ -15,7 +15,7 @@ pipeline {
                 always {
                     sh 'ls -la build/*'
                     junit 'build/test-results/test/*.xml'
-                    archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+                    archiveArtifacts 'build/libs/*.jar'
                 }
             }
         }
