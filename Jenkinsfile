@@ -8,7 +8,10 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'chmod +x gradlew'
+                sh './gradlew clean'
+                sh './gradlew init'
                 sh './gradlew build'
+                sh './gradlew test'
                 sh 'echo hola'
             }
         }
