@@ -11,9 +11,7 @@ pipeline {
                 //sh 'pwd'
                 //sh './gradlew clean'
                 sh './gradlew build'
-
                 }
-
             }
             post {
               always{
