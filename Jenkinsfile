@@ -7,8 +7,7 @@ pipeline {
             }
             steps {
                 echo 'Building..'
-                sh 'pwd'
-                sh 'ls -al'
+                sh 'chmod +x gradlew'
                 sh './gradlew build'
             }
         }
