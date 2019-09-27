@@ -19,5 +19,9 @@ pipeline {
                 }
             }
         }
+        stage{
+            sh 'ls -la'
+            sh 'ls -la build'
+        }
     }
 }
