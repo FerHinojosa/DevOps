@@ -14,7 +14,7 @@ pipeline {
             post {
                 always {
                     sh 'ls -la build/*'
-                    junit '/build/test-results/test/*.xml'
+                    junit 'build/test-results/test/*.xml'
                 }
             }
         }
