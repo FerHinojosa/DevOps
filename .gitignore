@@ -1,4 +1,5 @@
 .gradle
 .idea
-/build
-build
+/build/classes/
+/tmp/compileJava
+/tmp/compileTestJava
