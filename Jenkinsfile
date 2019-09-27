@@ -8,12 +8,12 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'chmod +x gradlew'
-                //sh 'pwd'
                 //sh './gradlew clean'
                 sh './gradlew build'
             }
             post {
                 always {
+                    sh 'ls -la build/*'
                     junit '/build/test-results/test/*.xml'
                 }
             }
