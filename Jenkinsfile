@@ -9,7 +9,7 @@ pipeline {
                 echo 'Building..'
                 sh 'chmod +x gradlew'
                 sh './gradlew clean'
-                sh './gradlew build'
+                sh './gradlew build -d'
                 script {
                   try {
                         sh './gradlew clean test --no-daemon'
