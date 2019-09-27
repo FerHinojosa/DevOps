@@ -2,7 +2,7 @@ pipeline {
     agent any
     stages {
         stage('Build') {
-           agent {
+            agent {
                 docker { image 'gato756/awt04webservice_1.0:1.0' }
             }
             steps {
@@ -12,13 +12,11 @@ pipeline {
                 //sh './gradlew clean'
                 sh './gradlew build'
             }
-            }
             post {
-              always{
+                always {
                     junit '/build/test-results/test/*.xml'
-                 }
+                }
             }
+        }
     }
 }
-//}
-//}
