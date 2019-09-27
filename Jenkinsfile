@@ -9,10 +9,15 @@ pipeline {
                 echo 'Building..'
                 sh 'chmod +x gradlew'
                 sh './gradlew clean'
-                sh './gradlew init'
                 sh './gradlew build'
-                sh './gradlew test'
-                sh 'echo hola'
+                script {
+                  try {
+                        sh './gradlew clean test --no-daemon' 
+                    }
+                    finally {
+                    junit '/build/test-results/test/*.xml'
+                }
+
             }
         }
     }
