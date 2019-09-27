@@ -9,7 +9,8 @@ pipeline {
                 echo 'Building..'
                 sh 'chmod +x gradlew'
                 //sh 'pwd'
-                sh './gradlew clean'
+                //sh './gradlew clean'
+                sh './gradlew build'
                 post {
                     always{
                         junit '/build/test-results/test/*.xml'
