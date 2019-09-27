@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Build') {
             agent {
@@ -8,7 +7,8 @@ pipeline {
             }
             steps {
                 echo 'Building..'
-                sh '/AWT04-WebService/gradlew test --tests'
+                sh 'pwd'
+                sh 'ls -al'
             }
         }
     }
