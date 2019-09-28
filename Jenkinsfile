@@ -15,19 +15,15 @@ pipeline {
                     junit 'build/test-results/test/*.xml'
                     //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/tests/test', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
                     archiveArtifacts 'build/libs/*.jar'
-                    sh 'echo Start Coping .......'
-                    sh 'ls -al'
-                    sh 'pwd'
-                    copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastWithArtifacts(), target: 'temp'
                 }
             }
         }
         stage('Copy Artifacts') {
             steps {
                 sh 'echo Start Coping .......'
+                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastWithArtifacts(), target: 'jar'
                 sh 'ls -al'
                 sh 'pwd'
-                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastSuccessful(), target: './jar'
             }
         }
         stage ('Build docker image'){
