@@ -21,7 +21,7 @@ pipeline {
         stage('Copy Artifacts') {
             steps {
                 sh 'echo Start Coping .......'
-                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastWithArtifacts(), target: 'jar'
+                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastWithArtifacts(), target: './jar'
                 sh 'ls -al'
                 sh 'pwd'
             }
