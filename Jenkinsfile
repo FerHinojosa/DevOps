@@ -17,7 +17,6 @@ pipeline {
                     junit 'build/test-results/test/*.xml'
                     //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/tests/test', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
                     archiveArtifacts 'build/libs/*.jar'
-                    sh 'cd /build/libs'
                     sh 'ls -al'
                 }
             }
