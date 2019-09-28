@@ -20,13 +20,13 @@ pipeline {
 
                     sh 'ls -al'
                     sh 'pwd'
-                    fingerprintArtifacts: true, projectName: '${JOB_NAME}', selector: specific('${BUILD_NUMBER}')
-                    /*script {
-                        step ([$class: 'DevOps',
-                               projectName: '',
+                    //fingerprintArtifacts: true, projectName: '${JOB_NAME}', selector: specific('${BUILD_NUMBER}')
+                    script {
+                        step ([$class: 'CopyArtifact',
+                               projectName: '${JOB_NAME}',
                                filter: "build/libs/*.zip",
                                target: 'jar']);
-                    }*/
+                    }
                 }
             }
         }
