@@ -15,6 +15,10 @@ pipeline {
                     junit 'build/test-results/test/*.xml'
                     //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/tests/test', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
                     archiveArtifacts 'build/libs/*.jar'
+                    sh 'echo Start Coping .......'
+                    sh 'ls -al'
+                    sh 'pwd'
+                    copyArtifacts filter: '*.jar', fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastSuccessful(), target: './jar'
                 }
             }
         }
