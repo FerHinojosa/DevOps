@@ -22,12 +22,14 @@ pipeline {
                 }
             }
         }
-        steps {
-            script {
-                step ([$class: 'CopyArtifact',
-                       projectName: 'DevOps/develop',
-                       filter: "build/libs*.zip",
-                       target: 'jar']);
+        stage('Copy Artifacts') {
+            steps {
+                script {
+                    step([$class     : 'CopyArtifact',
+                          projectName: 'DevOps/develop',
+                          filter     : "build/libs*.zip",
+                          target     : 'jar']);
+                }
             }
         }
         stage ('Build docker image'){
