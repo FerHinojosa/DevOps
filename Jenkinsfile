@@ -18,6 +18,7 @@ pipeline {
                     //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/tests/test', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
                     archiveArtifacts 'build/libs/*.jar'
                     sh 'ls -al'
+                    sh 'pwd'
                     script {
                         step ([$class: 'DevOps',
                                projectName: '',
