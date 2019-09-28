@@ -18,6 +18,12 @@ pipeline {
                     //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/tests/test', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
                     archiveArtifacts 'build/libs/*.jar'
                     sh 'ls -al'
+                    script {
+                        step ([$class: 'DevOps',
+                               projectName: '',
+                               filter: "build/libs/*.zip",
+                               target: 'jar']);
+                    }
                 }
             }
         }
