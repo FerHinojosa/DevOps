@@ -24,12 +24,7 @@ pipeline {
         }
         stage('Copy Artifacts') {
             steps {
-                script {
-                    step([$class     : 'CopyArtifact',
-                          projectName: 'DevOps/develop',
-                          filter     : "build/libs*.zip",
-                          target     : 'jar']);
-                }
+                    step([$class: 'CopyArtifact', projectName: 'DevOps/develop', filter: '*.jar',target:'jar'])
             }
         }
         stage ('Build docker image'){
