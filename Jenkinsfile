@@ -24,7 +24,8 @@ pipeline {
         }
         stage('Copy Artifacts') {
             steps {
-                    step([$class: 'CopyArtifact', projectName: 'DevOps/develop', filter: '*.jar',target:'jar'])
+                    //step([$class: 'CopyArtifact', projectName: 'DevOps/develop', filter: '*.jar',target:'jar'])
+                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*ar', projectName: 'DevOps/develop', selector: lastSuccessful(), target: 'jar'
             }
         }
         stage ('Build docker image'){
