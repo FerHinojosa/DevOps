@@ -26,5 +26,10 @@ pipeline {
                 sh 'ls -la build'
             }
         }
+        stage ('Build docker image'){
+            steps {
+                sh 'echo Docker'
+            }
+        }
     }
 }

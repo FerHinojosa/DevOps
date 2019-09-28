@@ -1,6 +1,7 @@
 .gradle
 .idea
-/build/classes/
+/build/**
+/build/classes/**
 /tmp/compileJava
 /tmp/compileTestJava
 *.class
