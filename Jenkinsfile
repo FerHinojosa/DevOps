@@ -17,17 +17,17 @@ pipeline {
                     junit 'build/test-results/test/*.xml'
                     //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/tests/test', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
                     archiveArtifacts 'build/libs/*.jar'
-
                     sh 'ls -al'
                     sh 'pwd'
-                    //fingerprintArtifacts: true, projectName: '${JOB_NAME}', selector: specific('${BUILD_NUMBER}')
-                    script {
-                        step ([$class: 'CopyArtifact',
-                               projectName: '${JOB_NAME}',
-                               filter: "build/libs/*.jar",
-                               target: 'jar']);
-                    }
                 }
+            }
+        }
+        steps {
+            script {
+                step ([$class: 'CopyArtifact',
+                       projectName: 'DevOps/develop',
+                       filter: "build/libs*.zip",
+                       target: 'jar']);
             }
         }
         stage ('Build docker image'){
