@@ -20,8 +20,10 @@ pipeline {
             }
         }
         stage ('2'){
-            sh 'ls -la'
-            sh 'ls -la build'
+            steps {
+                sh 'ls -la'
+                sh 'ls -la build'
+            }
         }
     }
 }
