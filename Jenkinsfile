@@ -16,12 +16,10 @@ pipeline {
                     sh 'ls -la build/*'
                     junit 'build/test-results/test/*.xml'
                     archiveArtifacts 'build/libs/*.jar'
+                    sh 'ls -la'
+                    sh 'ls -la build'
                 }
             }
-        }
-        stage{
-            sh 'ls -la'
-            sh 'ls -la build'
         }
     }
 }
