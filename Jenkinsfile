@@ -27,8 +27,13 @@ pipeline {
             }
         }
         stage ('Build docker image'){
+            agent{
+                agent { dockerfile true }
+            }
             steps {
                 sh 'echo Docker'
+                sh 'ls -al'
+                sh 'pwd'
             }
         }
     }
