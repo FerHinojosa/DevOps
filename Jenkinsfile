@@ -17,14 +17,16 @@ pipeline {
                     junit 'build/test-results/test/*.xml'
                     //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/tests/test', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
                     archiveArtifacts 'build/libs/*.jar'
+
                     sh 'ls -al'
                     sh 'pwd'
-                    script {
+                    fingerprintArtifacts: true, projectName: '${JOB_NAME}', selector: specific('${BUILD_NUMBER}')
+                    /*script {
                         step ([$class: 'DevOps',
                                projectName: '',
                                filter: "build/libs/*.zip",
                                target: 'jar']);
-                    }
+                    }*/
                 }
             }
         }
