@@ -18,7 +18,7 @@ pipeline {
                     sh 'echo Start Coping .......'
                     sh 'ls -al'
                     sh 'pwd'
-                    copyArtifacts filter: 'WebService-1.0-SNAPSHOT.jar', fingerprintArtifacts: true, projectName: 'DevOps/develop', selector: lastWithArtifacts(), target: 'temp'
+                    copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastWithArtifacts(), target: 'temp'
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
                 sh 'echo Start Coping .......'
                 sh 'ls -al'
                 sh 'pwd'
-                copyArtifacts filter: '*.jar', fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastSuccessful(), target: './jar'
+                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastSuccessful(), target: './jar'
             }
         }
         stage ('Build docker image'){
