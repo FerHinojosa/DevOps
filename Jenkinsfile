@@ -30,5 +30,17 @@ pipeline {
                 sh 'pwd'
             }
         }
+        stage('Update Docker Container') {
+            agent {
+                dockerfile true
+            }
+            steps {
+                docker login
+                sh 'echo Start Coping .......'
+                docker ps -a
+                sh 'ls -al'
+                sh 'pwd'
+            }
+        }
     }
 }
