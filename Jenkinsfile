@@ -52,7 +52,7 @@ pipeline {
                 }
             }
         }
-        stage('Update Docker imge') {
+        stage('Update Docker image') {
             /*agent {
                 dockerfile true
             }*/
@@ -78,10 +78,13 @@ pipeline {
                             mimeType: 'text/html',
                             replyTo: '',
                             subject: "Fail testing docker update",
-                            to: "gato756@gmail.com"
+                            to: "andybazualdo@fundacion-jala.org"
                     )
                 }
             }
         }
+    }
+    post{
+        cleanWs deleteDirs: true, notFailBuild: true
     }
 }
