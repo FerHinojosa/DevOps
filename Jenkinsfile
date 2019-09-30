@@ -1,9 +1,19 @@
 pipeline {
     agent any
+    environment {
+        //Docker credentials
+        DOCKER_USER_NAME = 'gato756'
+        DOCKER_PASSWORD    = 'Bichito123'
+        //New tag for docker
+        DOCKER_TAG_NEW = '1.1'
+        DOCKER_TAG_CURRENT = '1.0'
+        //Docker repository
+        DOCKER_REPOSITORY = 'gato756/awt04webservice_1.0'
+    }
     stages {
         stage('Build') {
             agent {
-                docker { image 'gato756/awt04webservice_1.0:1.0' }
+                docker { image '${DOCKER_REPOSITORY}:${DOCKER_TAG_CURRENT}' }
             }
             steps {
                 echo 'Building..'
@@ -18,6 +28,11 @@ pipeline {
                     sh 'ls -al'
                     sh 'pwd'
                 }
+                failure {
+                    mail to: 'gato756@gmail.com',
+                            subject: "Failed buildding : ${currentBuild.fullDisplayName}",
+                            body: "Something is wrong with ${env.BUILD_URL}. "
+                }
             }
         }
         stage('Copy Artifacts') {
@@ -29,8 +44,15 @@ pipeline {
                 sh 'ls -al jar'
                 sh 'docker ps -a'
             }
+            post{
+                failure {
+                    mail to: 'gato756@gmail.com',
+                            subject: "Failed Copy of Artifacts : ${currentBuild.fullDisplayName}",
+                            body: "Something is wrong with ${env.BUILD_URL}. "
+                }
+            }
         }
-        stage('Update Docker Container') {
+        stage('Update Docker imge') {
             /*agent {
                 dockerfile true
             }*/
@@ -39,17 +61,18 @@ pipeline {
                 //dockerfile true
                 sh 'ls -al'
                 sh 'pwd'
-                sh 'echo Start pull container .......'
-                sh 'docker login -u gato756 -p Bichito123'
-                sh 'docker build -t gato756/awt04webservice_1.0:1.1 .'
-                sh 'docker push gato756/awt04webservice_1.0:1.1'
+                sh 'echo Start updating to docker hub .......'
+                sh 'docker login -u ${DOCKER_USER_NAME} -p {DOCKER_PASSWORD}'
+                sh 'docker build -t ${DOCKER_REPOSITORY}:${DOCKER_TAG_NEW} .'
+                sh 'docker push ${DOCKER_REPOSITORY}:${DOCKER_TAG_NEW}'
+            }
+            post{
+                failure {
+                    mail to: 'gato756@gmail.com',
+                            subject: "Failed Docker push : ${currentBuild.fullDisplayName}",
+                            body: "Something is wrong with ${env.BUILD_URL}. "
+                }
             }
         }
-       /*stage('Update Docker Container other way') {
-            app = docker.build('gato756/awt04webservice_1.0:1.1')
-            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
-        }*/
     }
 }
