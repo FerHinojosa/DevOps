@@ -3,7 +3,7 @@ pipeline {
     environment {
         //Docker credentials
         DOCKER_USER_NAME = 'gato756'
-        DOCKER_PASSWORD    = 'Bichito123'
+        DOCKER_PASSWORD = 'Bichito123'
         //New tag for docker
         DOCKER_TAG_NEW = '1.1'
         DOCKER_TAG_CURRENT = '1.0'
@@ -62,7 +62,8 @@ pipeline {
                 sh 'ls -al'
                 sh 'pwd'
                 sh 'echo Start updating to docker hub .......'
-                sh 'docker login -u ${DOCKER_USER_NAME} -p {DOCKER_PASSWORD}'
+                //sh 'docker login -u ${DOCKER_USER_NAME} -p {DOCKER_PASSWORD}'
+                sh 'echo "DOCKER_PASSWORD" | docker login --${DOCKER_USER_NAME} foo --password-stdin'
                 sh 'docker build -t ${DOCKER_REPOSITORY}:${DOCKER_TAG_NEW} .'
                 sh 'docker push ${DOCKER_REPOSITORY}:${DOCKER_TAG_NEW}'
             }
