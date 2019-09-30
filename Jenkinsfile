@@ -3,7 +3,7 @@ pipeline {
     environment {
         //Docker credentials
         DOCKER_USER_NAME = 'gato756'
-        DOCKER_PASSWORD = 'Bichito123'
+        DOCKER_PASSWORD = 'Bichito1234'
         //New tag for docker
         DOCKER_TAG_NEW = '1.1'
         DOCKER_TAG_CURRENT = '1.0'
