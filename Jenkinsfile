@@ -31,12 +31,15 @@ pipeline {
             }
         }
         stage('Update Docker Container') {
-            agent {
+            /*agent {
                 dockerfile true
-            }
+            }*/
             steps {
-                docker login
-                sh 'echo Start Coping .......'
+
+                //dockerfile true
+                sh 'ls -al'
+                sh 'pwd'
+                sh 'echo Start pull container .......'
                 sh 'docker login -u gato756 -p Bichito123'
                 sh '(docker build -f dockerfile -t gato756/awt04webservice_1.0:1.1 && docker commit gato756/awt04webservice_1.0:1.1 && docker push gato756/awt04webservice_1.0:1.1)'
             }
