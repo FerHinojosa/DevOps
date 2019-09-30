@@ -31,12 +31,6 @@ pipeline {
             }
         }
         stage('Update Docker Container') {
-            pre{
-                steps{
-                sh 'ls -al'
-                sh 'pwd'
-                }
-            }
             agent {
                 dockerfile true
             }
