@@ -85,6 +85,8 @@ pipeline {
         }
     }
     post{
-        cleanWs deleteDirs: true, notFailBuild: true
+        always {
+            cleanWs deleteDirs: true, notFailBuild: true
+        }
     }
 }
