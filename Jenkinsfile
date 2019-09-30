@@ -41,5 +41,11 @@ pipeline {
                 sh '(docker build -f dockerfile -t gato756/awt04webservice_1.0:1.1 && docker commit gato756/awt04webservice_1.0:1.1 && docker push gato756/awt04webservice_1.0:1.1)'
             }
         }
+       /*stage('Update Docker Container other way') {
+            app = docker.build('gato756/awt04webservice_1.0:1.1')
+            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+        }*/
     }
 }
