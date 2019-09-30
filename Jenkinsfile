@@ -37,7 +37,7 @@ pipeline {
             steps {
                 docker login
                 sh 'echo Start Coping .......'
-                docker ps -a
+                sh 'docker login -u gato756 -p Apocalipsis1@#'
                 sh 'ls -al'
                 sh 'pwd'
             }
