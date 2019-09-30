@@ -41,7 +41,8 @@ pipeline {
                 sh 'pwd'
                 sh 'echo Start pull container .......'
                 sh 'docker login -u gato756 -p Bichito123'
-                sh '(docker build -f Dockerfile -t gato756/awt04webservice_1.0:1.1 && docker push gato756/awt04webservice_1.0:1.1)'
+                sh 'docker build -t gato756/awt04webservice_1.0:1.1 .'
+                sh 'docker push gato756/awt04webservice_1.0:1.1'
             }
         }
        /*stage('Update Docker Container other way') {
