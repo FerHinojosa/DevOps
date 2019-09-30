@@ -68,9 +68,17 @@ pipeline {
             }
             post{
                 failure {
-                    mail to: 'gato756@gmail.com',
-                            subject: "Failed Docker push : ${currentBuild.fullDisplayName}",
-                            body: "Something is wrong with ${env.BUILD_URL}. "
+                    mail(
+                            bcc: '',
+                            body: "<p>Hi </p>",
+                            cc: '',
+                            charset: 'UTF-8',
+                            from: '',
+                            mimeType: 'text/html',
+                            replyTo: '',
+                            subject: "Fail testing docker update",
+                            to: "gato756@gmail.com"
+                    )
                 }
             }
         }
