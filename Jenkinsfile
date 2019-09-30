@@ -26,8 +26,8 @@ pipeline {
                 sh 'ls -al'
                 sh 'pwd'
                 copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastWithArtifacts(), target: './jar'
-                sh 'ls -al'
-                sh 'pwd'
+                sh 'ls -al jar'
+                sh 'docker ps -a'
             }
         }
         stage('Update Docker Container') {
@@ -38,6 +38,7 @@ pipeline {
                 docker login
                 sh 'echo Start Coping .......'
                 sh 'docker login -u gato756 -p Bichito123'
+                sh '(docker build -f dockerfile -t gato756/awt04webservice_1.0:1.1 && docker commit gato756/awt04webservice_1.0:1.1 && docker push gato756/awt04webservice_1.0:1.1)'
             }
         }
     }
