@@ -31,6 +31,10 @@ pipeline {
             }
         }
         stage('Update Docker Container') {
+            pre{
+                sh 'ls -al'
+                sh 'pwd'
+            }
             agent {
                 dockerfile true
             }
@@ -38,8 +42,6 @@ pipeline {
                 docker login
                 sh 'echo Start Coping .......'
                 sh 'docker login -u gato756 -p Bichito123'
-                sh 'ls -al'
-                sh 'pwd'
             }
         }
     }
