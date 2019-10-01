@@ -87,7 +87,7 @@ pipeline {
                 }
             }
         }
-        stage('Release') {
+        /*stage('Release') {
             steps {
                 sh 'ls -al'
                 sh 'pwd'
@@ -99,7 +99,7 @@ pipeline {
                             to: 'fernando.hinojosa@live.com'
                 }
             }
-        }
+        }*/
     }
     post{
         always {
