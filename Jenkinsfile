@@ -19,7 +19,14 @@ pipeline {
                 echo 'Building..'
                 sh 'chmod +x gradlew'
                 sh './gradlew build'
+                emailext body: 'Hello',
+                        subject: 'Failure',
+                        to: 'fernando.hinojosa@live.com'
+
+
+
             }
+
             post {
                 always {
                     junit 'build/test-results/test/*.xml'
@@ -73,7 +80,7 @@ pipeline {
         stage('SonarCloud') {
             steps {
                 sh 'chmod +x gradlew'
-                sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
+                //sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
             }
             post{
                 failure {
