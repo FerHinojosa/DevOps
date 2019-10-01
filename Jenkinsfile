@@ -28,11 +28,18 @@ pipeline {
                     sh 'ls -al'
                     sh 'pwd'
                 }
-                failure {
-                    mail to: 'gato756@gmail.com',
-                            subject: "Failed buildding : ${currentBuild.fullDisplayName}",
-                            body: "Something is wrong with ${env.BUILD_URL}. "
-                }
+                mail(
+                        bcc: '',
+                        body: "<p>Message related to logs of building failure </p>",
+                        cc: '',
+                        charset: 'UTF-8',
+                        from: '',
+                        mimeType: 'text/html',
+                        replyTo: '',
+                        subject: "Fail building project",
+                        emailextattachLog: true,
+                        to: "gato756@hotmail.com"
+                )
             }
         }
         stage('Copy Artifacts') {
@@ -45,11 +52,18 @@ pipeline {
                 sh 'docker ps -a'
             }
             post{
-                failure {
-                    mail to: 'gato756@gmail.com',
-                            subject: "Failed Copy of Artifacts : ${currentBuild.fullDisplayName}",
-                            body: "Something is wrong with ${env.BUILD_URL}. "
-                }
+                mail(
+                        bcc: '',
+                        body: "<p>Message related to logs of copy artifacts failure </p>",
+                        cc: '',
+                        charset: 'UTF-8',
+                        from: '',
+                        mimeType: 'text/html',
+                        replyTo: '',
+                        subject: "Fail building project",
+                        emailextattachLog: true,
+                        to: "gato756@hotmail.com"
+                )
             }
         }
         stage('SonarCloud') {
@@ -58,14 +72,21 @@ pipeline {
                 sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
             }
             post{
-                failure {
-                    mail to: 'gato756@gmail.com',
-                            subject: "Failed Copy of Artifacts : ${currentBuild.fullDisplayName}",
-                            body: "Something is wrong with ${env.BUILD_URL}. "
-                }
+                mail(
+                        bcc: '',
+                        body: "<p>Message related to logs of sonarcloud failure </p>",
+                        cc: '',
+                        charset: 'UTF-8',
+                        from: '',
+                        mimeType: 'text/html',
+                        replyTo: '',
+                        subject: "Fail building project",
+                        emailextattachLog: true,
+                        to: "gato756@hotmail.com"
+                )
             }
         }
-        stage('Update Docker image') {
+        stage('Docker push') {
             /*agent {
                 dockerfile true
             }*/
@@ -84,14 +105,14 @@ pipeline {
                 failure {
                     mail(
                             bcc: '',
-                            body: "<p>Hi </p>",
+                            body: "<p>Message related to logs of docker push failure </p>",
                             cc: '',
                             charset: 'UTF-8',
                             from: '',
                             mimeType: 'text/html',
                             replyTo: '',
-                            subject: "Fail testing docker update",
-                            //emailext attachLog: true,
+                            subject: "Fail building project",
+                            emailextattachLog: true,
                             to: "gato756@hotmail.com"
                     )
                 }
