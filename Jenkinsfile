@@ -52,6 +52,19 @@ pipeline {
                 }
             }
         }
+        stage('SonarCloud') {
+            steps {
+                sh 'chmod +x gradlew'
+                sh './gradlew sonarqube -Dsonar.projectKey=jenkinsdev -Dsonar.organization=fernando -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=2cd00e82725ac78e674ec563f439aad707051d54'
+            }
+            post{
+                failure {
+                    mail to: 'gato756@gmail.com',
+                            subject: "Failed Copy of Artifacts : ${currentBuild.fullDisplayName}",
+                            body: "Something is wrong with ${env.BUILD_URL}. "
+                }
+            }
+        }
         stage('Update Docker image') {
             /*agent {
                 dockerfile true
@@ -78,6 +91,7 @@ pipeline {
                             mimeType: 'text/html',
                             replyTo: '',
                             subject: "Fail testing docker update",
+                            //emailext attachLog: true,
                             to: "andybazualdo@fundacion-jala.org"
                     )
                 }
