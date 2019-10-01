@@ -3,7 +3,7 @@ pipeline {
     environment {
         //Docker credentials
         DOCKER_USER_NAME = 'gato756'
-        DOCKER_PASSWORD = 'Bichito1234'
+        DOCKER_PASSWORD = 'Bichito123'
         //New tag for docker
         DOCKER_TAG_NEW = '1.1'
         DOCKER_TAG_CURRENT = '1.0'
@@ -82,6 +82,19 @@ pipeline {
             post{
                 failure {
                     emailext body: 'The docker push process was not completed ',
+                            subject: 'Failure',
+                            to: 'fernando.hinojosa@live.com'
+                }
+            }
+        }
+        stage('Release') {
+            steps {
+                sh 'ls -al'
+                sh 'pwd'
+            }
+            post{
+                failure {
+                    emailext body: 'The Release process was not completed ',
                             subject: 'Failure',
                             to: 'fernando.hinojosa@live.com'
                 }
