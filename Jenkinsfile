@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('validate branch') {
             //when { branch "develop" }
-            when { branch "${BRANCH_NAME}" }
+            when { branch "${BRANCH_NAME}45566" }
             steps {
                 sh 'echo holass'
             }
