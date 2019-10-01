@@ -65,7 +65,7 @@ pipeline {
     }
     post{
         failure {
-            emailext attachLog: true, compressLog: true, body: 'The process to generate a new verion of {GIT_BRANCH}. Log with the info is attached ',
+            emailext attachLog: true, compressLog: true, body: 'The process to generate a new verion of ${GIT_BRANCH}. Log with the info is attached ',
                      subject: 'Build Notification: ${JOB_NAME}-Build# ${BUILD_NUMBER} ${currentBuild.result}',
                      to: 'fernando.hinojosa@live.com'
         }
