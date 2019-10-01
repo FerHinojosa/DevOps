@@ -16,7 +16,7 @@ pipeline {
             //when { branch "develop" }
             when { branch "${BRANCH_NAME}" }
             steps {
-                sh 'holass'
+                sh 'echo holass'
             }
         }
         stage('Build') {
