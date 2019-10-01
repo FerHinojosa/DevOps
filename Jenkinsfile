@@ -18,7 +18,7 @@ pipeline {
                 docker { image '${DOCKER_REPOSITORY}:${DOCKER_TAG_CURRENT}' }
             }
             steps {
-                echo 'Building..   BRANCH_NAME: ${BRANCH_NAME}    '
+                echo 'Building..   BRANCH_NAME: ${BRANCH_NAME} env.BRANCH_NAME env.GIT_BRANCH  '
                 echo '${GIT_BRANCH} /////  ${GIT_BRANCH#*/}'
                 sh 'printenv'
                 //sh 'chmod +x gradlew'
