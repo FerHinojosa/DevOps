@@ -24,7 +24,6 @@ pipeline {
             post {
                 always {
                     junit 'build/test-results/test/*.xml'
-                    //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/tests/test', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
                     archiveArtifacts 'build/libs/*.jar'
                     sh 'ls -al'
                     sh 'pwd'
@@ -67,16 +66,10 @@ pipeline {
             }
         }
         stage('Docker push') {
-            /*agent {
-                dockerfile true
-            }*/
             steps {
-
-                //dockerfile true
                 sh 'ls -al'
                 sh 'pwd'
                 sh 'echo Start updating to docker hub .......'
-                //sh 'docker login -u ${DOCKER_USER_NAME} -p {DOCKER_PASSWORD}'
                 sh 'echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USER_NAME} --password-stdin'
                 sh 'docker build -t ${DOCKER_REPOSITORY}:${DOCKER_TAG_NEW} .'
                 sh 'docker push ${DOCKER_REPOSITORY}:${DOCKER_TAG_NEW}'
