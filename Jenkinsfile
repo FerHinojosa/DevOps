@@ -55,7 +55,7 @@ pipeline {
         stage('SonarCloud') {
             steps {
                 sh 'chmod +x gradlew'
-                sh './gradlew sonarqube -Dsonar.projectKey=jenkinsdev -Dsonar.organization=fernando -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=2cd00e82725ac78e674ec563f439aad707051d54'
+                sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
             }
             post{
                 failure {
