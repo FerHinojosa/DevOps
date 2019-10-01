@@ -92,7 +92,7 @@ pipeline {
                             replyTo: '',
                             subject: "Fail testing docker update",
                             //emailext attachLog: true,
-                            to: "andybazualdo@fundacion-jala.org"
+                            to: "gato756@hotmail.com"
                     )
                 }
             }
