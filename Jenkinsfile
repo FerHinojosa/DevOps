@@ -38,7 +38,7 @@ pipeline {
                             mimeType: 'text/html',
                             replyTo: '',
                             subject: "Fail building project",
-                            emailextattachLog: true,
+                            //emailextattachLog: true,
                             to: "gato756@hotmail.com"
                     )
                 }
@@ -64,7 +64,7 @@ pipeline {
                             mimeType: 'text/html',
                             replyTo: '',
                             subject: "Fail building project",
-                            emailextattachLog: true,
+                            //emailextattachLog: true,
                             to: "gato756@hotmail.com"
                     )
                 }
@@ -86,7 +86,7 @@ pipeline {
                             mimeType: 'text/html',
                             replyTo: '',
                             subject: "Fail building project",
-                            emailextattachLog: true,
+                            //emailextattachLog: true,
                             to: "gato756@hotmail.com"
                     )
                 }
@@ -118,7 +118,7 @@ pipeline {
                             mimeType: 'text/html',
                             replyTo: '',
                             subject: "Fail building project",
-                            emailextattachLog: true,
+                            //emailextattachLog: true,
                             to: "gato756@hotmail.com"
                     )
                 }
