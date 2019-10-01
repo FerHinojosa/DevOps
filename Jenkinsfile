@@ -35,7 +35,7 @@ pipeline {
                 sh 'echo Start Coping .......'
                 sh 'ls -al'
                 sh 'pwd'
-                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: 'DevOps/develop', selector: lastWithArtifacts(), target: './jar'
+                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: '${JOB_NAME}', selector: lastWithArtifacts(), target: './jar'
                 sh 'ls -al jar'
                 sh 'docker ps -a'
             }
