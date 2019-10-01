@@ -19,12 +19,6 @@ pipeline {
                 echo 'Building..'
                 sh 'chmod +x gradlew'
                 sh './gradlew build'
-                emailext body: 'Hello',
-                        subject: 'Failure',
-                        to: 'fernando.hinojosa@live.com'
-
-
-
             }
 
             post {
@@ -36,18 +30,9 @@ pipeline {
                     sh 'pwd'
                 }
                 failure {
-                    mail(
-                            bcc: '',
-                            body: "<p>Message related to logs of building failure </p>",
-                            cc: '',
-                            charset: 'UTF-8',
-                            from: '',
-                            mimeType: 'text/html',
-                            replyTo: '',
-                            subject: "Fail building project",
-                            //emailextattachLog: true,
-                            to: "gato756@hotmail.com"
-                    )
+                    emailext body: 'The build process was not completed ',
+                            subject: 'Failure',
+                            to: 'fernando.hinojosa@live.com'
                 }
             }
         }
@@ -62,18 +47,9 @@ pipeline {
             }
             post{
                 failure {
-                    mail(
-                            bcc: '',
-                            body: "<p>Message related to logs of copy artifacts failure </p>",
-                            cc: '',
-                            charset: 'UTF-8',
-                            from: '',
-                            mimeType: 'text/html',
-                            replyTo: '',
-                            subject: "Fail building project",
-                            //emailextattachLog: true,
-                            to: "gato756@hotmail.com"
-                    )
+                    emailext body: 'The Copy Artifacts process was not completed ',
+                            subject: 'Failure',
+                            to: 'fernando.hinojosa@live.com'
                 }
             }
         }
@@ -84,18 +60,9 @@ pipeline {
             }
             post{
                 failure {
-                    mail(
-                            bcc: '',
-                            body: "<p>Message related to logs of sonarcloud failure </p>",
-                            cc: '',
-                            charset: 'UTF-8',
-                            from: '',
-                            mimeType: 'text/html',
-                            replyTo: '',
-                            subject: "Fail building project",
-                            //emailextattachLog: true,
-                            to: "gato756@hotmail.com"
-                    )
+                    emailext body: 'The sonarCloud process was not completed ',
+                            subject: 'Failure',
+                            to: 'fernando.hinojosa@live.com'
                 }
             }
         }
@@ -116,18 +83,9 @@ pipeline {
             }
             post{
                 failure {
-                    mail(
-                            bcc: '',
-                            body: "<p>Message related to logs of docker push failure </p>",
-                            cc: '',
-                            charset: 'UTF-8',
-                            from: '',
-                            mimeType: 'text/html',
-                            replyTo: '',
-                            subject: "Fail building project",
-                            //emailextattachLog: true,
-                            to: "gato756@hotmail.com"
-                    )
+                    emailext body: 'The docker push process was not completed ',
+                            subject: 'Failure',
+                            to: 'fernando.hinojosa@live.com'
                 }
             }
         }
