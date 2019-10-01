@@ -69,10 +69,11 @@ pipeline {
             steps {
                 sh 'ls -al'
                 sh 'pwd'
+                TAG = VersionNumber projectStartDate: '09/23/2019', versionNumberString: '.1', versionPrefix: 'v1.', worstResultForIncrement: 'FAILURE'
                 sh 'echo Start updating to docker hub .......'
                 sh 'echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USER_NAME} --password-stdin'
-                sh 'docker build -t ${DOCKER_REPOSITORY}:${DOCKER_TAG_NEW} .'
-                sh 'docker push ${DOCKER_REPOSITORY}:${DOCKER_TAG_NEW}'
+                sh 'docker build -t ${DOCKER_REPOSITORY}:${TAG} .'
+                sh 'docker push ${DOCKER_REPOSITORY}:${TAG}'
             }
             post{
                 failure {
