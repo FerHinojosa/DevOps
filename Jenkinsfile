@@ -12,6 +12,13 @@ pipeline {
         TAG = VersionNumber projectStartDate: '09/23/2019', versionNumberString: '${BUILD_NUMBER}', versionPrefix: 'v1.', worstResultForIncrement: 'FAILURE'
     }
     stages {
+        stage('validate branch') {
+            when { branch "develop" }
+            //when { branch "${BRANCH_NAME}" }
+            steps {
+                sh 'holass'
+            }
+        }
         stage('Build') {
             agent {
                 docker { image '${DOCKER_REPOSITORY}:${DOCKER_TAG_CURRENT}' }
