@@ -19,7 +19,7 @@ pipeline {
             }
             steps {
                 echo 'Building..'
-                echo '${GIT_BRANCH}'
+                echo '${GIT_BRANCH} /////  ${GIT_BRANCH#*/}'
                 //sh 'chmod +x gradlew'
                 sh './gradlew build'
             }
