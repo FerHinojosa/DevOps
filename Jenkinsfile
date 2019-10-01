@@ -13,8 +13,8 @@ pipeline {
     }
     stages {
         stage('validate branch') {
-            when { branch "develop" }
-            //when { branch "${BRANCH_NAME}" }
+            //when { branch "develop" }
+            when { branch "${BRANCH_NAME}" }
             steps {
                 sh 'holass'
             }
