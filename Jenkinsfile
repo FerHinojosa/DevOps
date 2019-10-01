@@ -18,10 +18,9 @@ pipeline {
             }
             steps {
                 echo 'Building..'
-                sh 'chmod +x gradlew'
+               // sh 'chmod +x gradlew'
                 sh './gradlew build'
             }
-
             post {
                 always {
                     junit 'build/test-results/test/*.xml'
@@ -44,7 +43,7 @@ pipeline {
         stage('SonarCloud') {
             steps {
                 sh 'chmod +x gradlew'
-                //sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
+                sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
             }
         }
         stage('Docker push') {
@@ -53,11 +52,7 @@ pipeline {
                 sh 'pwd'
                 sh 'echo Start updating to docker hub .......'
                 sh 'echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USER_NAME} --password-stdin'
-                //sh 'docker build -t ${DOCKER_REPOSITORY}:${DOCKER_TAG_NEW} .'
-                //sh 'docker build -t ${DOCKER_REPOSITORY}:${BUILD_NUMBER} .'
                 sh 'docker build -t ${DOCKER_REPOSITORY}:${TAG} .'
-                //sh 'docker push ${DOCKER_REPOSITORY}:${DOCKER_TAG_NEW}'
-                //sh 'docker push ${DOCKER_REPOSITORY}:${BUILD_NUMBER}'
                 sh 'docker push ${DOCKER_REPOSITORY}:${TAG}'
             }
         }
