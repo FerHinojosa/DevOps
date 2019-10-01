@@ -10,6 +10,7 @@ pipeline {
         //Docker repository
         DOCKER_REPOSITORY = 'gato756/awt04webservice_1.0'
         TAG = VersionNumber projectStartDate: '09/23/2019', versionNumberString: '${BUILD_NUMBER}', versionPrefix: 'v1.', worstResultForIncrement: 'FAILURE'
+        GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
     }
     stages {
         stage('Build') {
@@ -18,7 +19,8 @@ pipeline {
             }
             steps {
                 echo 'Building..'
-               // sh 'chmod +x gradlew'
+                echo '${GIT_BRANCH}'
+                //sh 'chmod +x gradlew'
                 sh './gradlew build'
             }
             post {
