@@ -43,8 +43,8 @@ pipeline {
                 sh 'ls -al'
                 sh 'pwd'
                 //copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: '${JOB_NAME}', selector: lastWithArtifacts(), target: './jar'
-                sh 'ls -al jar'
-                sh 'docker ps -a'
+                //sh 'ls -al jar'
+                //sh 'docker ps -a'
             }
         }
         stage('Docker push') {
@@ -57,10 +57,10 @@ pipeline {
                 sh 'docker push ${DOCKER_REPOSITORY}:${TAG}'
             }
         }
-        /*stage('Deploy to development'){
+        stage('Deploy to development'){
             sh 'echo deploying into development .......'
         }        
-        stage('Unit test'){
+        /*stage('Unit test'){
             sh 'echo executing Unit tests .......'
         }
         stage('Promote to QA'){
