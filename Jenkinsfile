@@ -85,7 +85,7 @@ pipeline {
         stage('Promote to QA'){
             agent{label'slave01'}
             steps{
-                sh 'echo ${NODE_NAME}'
+                sh 'docker ps -a'
                 sh 'echo deploying into QA enviroment .......'
             }
         }
