@@ -31,7 +31,7 @@ pipeline {
                 }
             }
         }
-        stage('SonarCloud') {
+        /*stage('SonarCloud') {
             steps {
                 sh 'chmod +x gradlew'
                 //sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
@@ -74,7 +74,7 @@ pipeline {
                 sh 'ls -al'
                 sh 'echo {GIT_BRANCH}'
             }
-        }
+        }*/
     }
     post{
        failure {
