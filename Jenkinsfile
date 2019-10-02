@@ -75,7 +75,6 @@ pipeline {
                 sh 'echo {GIT_BRANCH}'
             }
         }
-
     }
     post{
        failure {
