@@ -13,19 +13,12 @@ pipeline {
         TAG = VersionNumber projectStartDate: '09/23/2019', versionNumberString: '${BUILD_NUMBER}', versionPrefix: 'v1.', worstResultForIncrement: 'FAILURE'
     }
     stages {
-        stage('validate branch') {
-            //when { branch "develop" }
-            when { branch "master" }
-            steps {
-                sh 'echo tagging'
-            }
-        }
         stage('Build') {
             agent {
                 docker { image '${DOCKER_REPOSITORY}:${DOCKER_TAG_CURRENT}' }
             }
             steps {
-                sh 'printenv'
+                //sh 'printenv'
                 sh 'chmod +x gradlew'
                 sh './gradlew build'
             }
@@ -38,6 +31,12 @@ pipeline {
                 }
             }
         }
+        stage('SonarCloud') {
+            steps {
+                sh 'chmod +x gradlew'
+                //sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
+            }
+        }
         stage('Copy Artifacts') {
             steps {
                 sh 'echo Start Coping .......'
@@ -46,12 +45,6 @@ pipeline {
                 copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: '${JOB_NAME}', selector: lastWithArtifacts(), target: './jar'
                 sh 'ls -al jar'
                 sh 'docker ps -a'
-            }
-        }
-        stage('SonarCloud') {
-            steps {
-                sh 'chmod +x gradlew'
-                //sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
             }
         }
         stage('Docker push') {
@@ -64,12 +57,25 @@ pipeline {
                 sh 'docker push ${DOCKER_REPOSITORY}:${TAG}'
             }
         }
-        /*stage('Release') {
+        stages('Deploy to development'){
+            sh 'echo deploying into development .......'
+        }        
+        stages('Unit test'){
+            sh 'echo executing Unit tests .......'
+        }
+        stages('Promote to QA'){
+            sh 'echo deploying into QA enviroment .......'
+        }
+        stages('Tests'){
+            sh 'echo  making test.......'
+        }
+        stage('Release') {
             steps {
                 sh 'ls -al'
                 sh 'echo {GIT_BRANCH}'
             }
-        }*/
+        }
+
     }
     post{
        failure {
