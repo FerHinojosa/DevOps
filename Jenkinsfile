@@ -7,13 +7,13 @@ pipeline {
         //New tag for docker
         DOCKER_TAG_NEW = '1.1'
         DOCKER_TAG_CURRENT = '1.0'
+        //DOCKER_TAG_CURRENT = 'latest'
         //Docker repository
         DOCKER_REPOSITORY = 'gato756/awt04webservice_1.0'
         TAG = VersionNumber projectStartDate: '09/23/2019', versionNumberString: '${BUILD_NUMBER}', versionPrefix: 'v1.', worstResultForIncrement: 'FAILURE'
     }
     stages {
         stage('validate branch') {
-            //when { branch "develop" }
             when { branch "master" }
             steps {
                 sh 'echo tagging'
@@ -24,8 +24,8 @@ pipeline {
                 docker { image '${DOCKER_REPOSITORY}:${DOCKER_TAG_CURRENT}' }
             }
             steps {
-                //sh 'printenv'
-                sh 'chmod +x gradlew'
+                sh 'printenv'
+                //sh 'chmod +x gradlew'
                 sh './gradlew build'
             }
             post {
