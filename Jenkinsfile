@@ -20,16 +20,16 @@ pipeline {
             steps {
                 //sh 'printenv'
                 sh 'chmod +x gradlew'
-                //sh './gradlew build'
+                sh './gradlew build'
             }
-            /*post {
+            post {
                 always {
                     junit 'build/test-results/test/*.xml'
                     archiveArtifacts 'build/libs/*.jar'
                     sh 'ls -al'
                     sh 'pwd'
                 }
-            }*/
+            }
         }
         stage('SonarCloud') {
             steps {
@@ -42,7 +42,7 @@ pipeline {
                 sh 'echo Start Coping .......'
                 sh 'ls -al'
                 sh 'pwd'
-                //copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: '${JOB_NAME}', selector: lastWithArtifacts(), target: './jar'
+                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: '${JOB_NAME}', selector: lastWithArtifacts(), target: './jar'
                 //sh 'ls -al jar'
                 //sh 'docker ps -a'
             }
@@ -62,7 +62,7 @@ pipeline {
                 sh 'echo deploying into development .......'
             }
         }        
-        /*stage('Unit test'){
+        stage('Unit test'){
             steps{
                 sh 'echo executing Unit tests .......'
             }
@@ -82,7 +82,7 @@ pipeline {
                 sh 'ls -al'
                 sh 'echo {GIT_BRANCH}'
             }
-        }*/
+        }
     }
     post{
        failure {
