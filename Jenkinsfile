@@ -22,14 +22,14 @@ pipeline {
                 sh 'chmod +x gradlew'
                 //sh './gradlew build'
             }
-            post {
+            /*post {
                 always {
                     junit 'build/test-results/test/*.xml'
                     archiveArtifacts 'build/libs/*.jar'
                     sh 'ls -al'
                     sh 'pwd'
                 }
-            }
+            }*/
         }
         stage('SonarCloud') {
             steps {
@@ -37,17 +37,17 @@ pipeline {
                 //sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
             }
         }
-        /*stage('Copy Artifacts') {
+        stage('Copy Artifacts') {
             steps {
                 sh 'echo Start Coping .......'
                 sh 'ls -al'
                 sh 'pwd'
-                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: '${JOB_NAME}', selector: lastWithArtifacts(), target: './jar'
+                //copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: '${JOB_NAME}', selector: lastWithArtifacts(), target: './jar'
                 sh 'ls -al jar'
                 sh 'docker ps -a'
             }
         }
-        stage('Docker push') {
+        /*stage('Docker push') {
             steps {
                 sh 'ls -al'
                 sh 'pwd'
