@@ -58,16 +58,24 @@ pipeline {
             }
         }
         stage('Deploy to development'){
-            sh 'echo deploying into development .......'
+            steps{
+                sh 'echo deploying into development .......'
+            }
         }        
         /*stage('Unit test'){
-            sh 'echo executing Unit tests .......'
+            steps{
+                sh 'echo executing Unit tests .......'
+            }
         }
         stage('Promote to QA'){
-            sh 'echo deploying into QA enviroment .......'
+            steps{
+                sh 'echo deploying into QA enviroment .......'
+            }
         }
         stage('Tests'){
-            sh 'echo  making test.......'
+            steps{
+                sh 'echo  making test.......'
+            }
         }
         stage('Release') {
             steps {
