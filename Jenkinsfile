@@ -47,7 +47,7 @@ pipeline {
                 sh 'docker ps -a'
             }
         }
-        /*stage('Docker push') {
+        stage('Docker push') {
             steps {
                 sh 'ls -al'
                 sh 'pwd'
@@ -57,7 +57,7 @@ pipeline {
                 sh 'docker push ${DOCKER_REPOSITORY}:${TAG}'
             }
         }
-        stage('Deploy to development'){
+        /*stage('Deploy to development'){
             sh 'echo deploying into development .......'
         }        
         stage('Unit test'){
