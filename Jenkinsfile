@@ -20,7 +20,7 @@ pipeline {
             steps {
                 //sh 'printenv'
                 sh 'chmod +x gradlew'
-                sh './gradlew build'
+                //sh './gradlew build'
             }
             post {
                 always {
