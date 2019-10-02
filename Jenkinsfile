@@ -53,13 +53,11 @@ pipeline {
                 sh 'pwd'
                 sh 'echo Start updating to docker hub .......'
                 sh 'echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USER_NAME} --password-stdin'
-                stage('validate branch') {
                     //when { branch "develop" }
-                    when { branch "master" }
+                    when { branch "develop" }
                     steps {
                         sh 'echo tagging'
                     }
-                }
                 sh 'docker build -t ${DOCKER_REPOSITORY}:${TAG} .'
                 sh 'docker push ${DOCKER_REPOSITORY}:${TAG}'
             }
