@@ -14,9 +14,9 @@ pipeline {
     stages {
         stage('validate branch') {
             //when { branch "develop" }
-            when { branch "${BRANCH_NAME}45566" }
+            when { branch "master" }
             steps {
-                sh 'echo holass'
+                sh 'echo tagging'
             }
         }
         stage('Build') {
@@ -24,10 +24,8 @@ pipeline {
                 docker { image '${DOCKER_REPOSITORY}:${DOCKER_TAG_CURRENT}' }
             }
             steps {
-                echo 'Building..   BRANCH_NAME: ${BRANCH_NAME} env.BRANCH_NAME env.GIT_BRANCH  '
-                echo '${GIT_BRANCH} /////  ${GIT_BRANCH#*/}'
-                sh 'printenv'
-                //sh 'chmod +x gradlew'
+                //sh 'printenv'
+                sh 'chmod +x gradlew'
                 sh './gradlew build'
             }
             post {
@@ -73,11 +71,11 @@ pipeline {
         }
     }
     post{
-       /* failure {
+       failure {
             emailext attachLog: true, compressLog: true, body: 'The process to generate a new verion of ${GIT_BRANCH}. Log with the info is attached ',
                      subject: 'Build Notification: ${JOB_NAME}-Build# ${BUILD_NUMBER} ${currentBuild.result}',
                      to: 'fernando.hinojosa@live.com'
-        }*/
+        }
         always {
             cleanWs deleteDirs: true, notFailBuild: true
         }
