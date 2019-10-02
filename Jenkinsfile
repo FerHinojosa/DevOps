@@ -47,7 +47,19 @@ pipeline {
                 //sh 'docker ps -a'
             }
         }
-        stage('Docker push') {
+        stage('Docker push develop') {
+            when { branch "develop" }
+            steps {
+                sh 'ls -al'
+                sh 'pwd'
+                sh 'echo Start updating to docker hub .......'
+                sh 'echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USER_NAME} --password-stdin'
+                sh 'docker build -t ${DOCKER_REPOSITORY}:DEVELOP-${TAG} .'
+                sh 'docker push ${DOCKER_REPOSITORY}:DEVELOP-${TAG}'
+            }
+        }
+        stage('Docker push master') {
+            when { branch "master" }
             steps {
                 sh 'ls -al'
                 sh 'pwd'
@@ -58,7 +70,9 @@ pipeline {
             }
         }
         stage('Deploy to development'){
+            agent{label'Principal'}
             steps{
+                sh 'echo ${NODE_NAME}'
                 sh 'echo deploying into development .......'
             }
         }        
@@ -68,19 +82,15 @@ pipeline {
             }
         }
         stage('Promote to QA'){
+            agent{label'slave1'}
             steps{
+                sh 'echo ${NODE_NAME}'
                 sh 'echo deploying into QA enviroment .......'
             }
         }
         stage('Tests'){
             steps{
                 sh 'echo  making test.......'
-            }
-        }
-        stage('Release') {
-            steps {
-                sh 'ls -al'
-                sh 'echo {GIT_BRANCH}'
             }
         }
     }
