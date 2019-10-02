@@ -19,7 +19,7 @@ pipeline {
             }
             steps {
                 sh 'printenv'
-                //sh 'chmod +x gradlew'
+                sh 'chmod +x gradlew'
                 sh './gradlew build'
             }
             post {
@@ -44,7 +44,7 @@ pipeline {
         stage('SonarCloud') {
             steps {
                 sh 'chmod +x gradlew'
-                sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
+                //sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
             }
         }
         stage('Docker push') {
