@@ -18,9 +18,10 @@ pipeline {
                 docker { image '${DOCKER_REPOSITORY}:${DOCKER_TAG_CURRENT}' }
             }
             steps {
-                //sh 'printenv'
+                sh 'printenv'
                 sh 'chmod +x gradlew'
                 sh './gradlew build'
+                sh 'echo ${NODE_NAME}'
             }
             post {
                 always {
@@ -70,7 +71,7 @@ pipeline {
             }
         }
         stage('Deploy to development'){
-            agent{label'Principal'}
+            agent{label'master'}
             steps{
                 sh 'echo ${NODE_NAME}'
                 sh 'echo deploying into development .......'
