@@ -57,16 +57,16 @@ pipeline {
                 sh 'docker push ${DOCKER_REPOSITORY}:${TAG}'
             }
         }
-        stages('Deploy to development'){
+        stage('Deploy to development'){
             sh 'echo deploying into development .......'
         }        
-        stages('Unit test'){
+        stage('Unit test'){
             sh 'echo executing Unit tests .......'
         }
-        stages('Promote to QA'){
+        stage('Promote to QA'){
             sh 'echo deploying into QA enviroment .......'
         }
-        stages('Tests'){
+        stage('Tests'){
             sh 'echo  making test.......'
         }
         stage('Release') {
