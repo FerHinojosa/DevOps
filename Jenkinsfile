@@ -47,10 +47,6 @@ pipeline {
         stage ('Deploy to Dev'){
             agent{label'master'}
             steps {
-                /*copyArtifacts filter: '**/*/*.jar', 
-                fingerprintArtifacts: true, 
-                projectName: '${JOB_NAME}',
-                selector: lastWithArtifacts()*/
                 unstash 'package_build'
                 sh 'pwd'
                 sh 'ls -la'
