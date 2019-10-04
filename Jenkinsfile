@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_USERNAME = '5917362014'
         DOCKER_PASSWORD = '0123456789'
-        DOCKER_ID = '5917362014/webserver'//rename
+        DOCKER_ID = '5917362014/webserver'
     }
     stages {
         stage ('Build') {
@@ -75,8 +75,8 @@ pipeline {
         stage ('Promote to QA'){
             agent{label'slave02'}
             steps {
-                //docer
-                echo 'Hello'
+                unstash 'package_build'
+                sh 'docker-compose up -d'
             }
         }
         /*stage ('Test'){
