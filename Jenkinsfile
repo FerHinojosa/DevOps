@@ -33,6 +33,7 @@ pipeline {
                 }*/
                 success {
                   archiveArtifacts 'build/libs/*.jar'
+                  stash includes: '**/*/*.jar', name: 'package_build'
                   sh 'pwd'
                 }
             }
@@ -46,10 +47,11 @@ pipeline {
         stage ('Deploy to Dev'){
             agent{label'master'}
             steps {
-                copyArtifacts filter: '**/*/*.jar', 
+                /*copyArtifacts filter: '**/*/*.jar', 
                 fingerprintArtifacts: true, 
                 projectName: '${JOB_NAME}',
-                selector: lastWithArtifacts()
+                selector: lastWithArtifacts()*/
+                unstash 'package_build'
                 sh 'pwd'
                 sh 'ls -la'
                 sh 'docker-compose up'
