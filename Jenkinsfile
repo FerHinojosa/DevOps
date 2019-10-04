@@ -54,7 +54,7 @@ pipeline {
         stage ('Run Smoke Tests'){
             steps {
                 echo 'Run Smoke Testing!!'
-                sh 'exit 0'
+                sh 'exit 1'
             }
         }
         stage ('Docker Build'){
@@ -72,14 +72,14 @@ pipeline {
                 sh 'docker images' 
             }
         }
-        /*stage ('Promote to QA'){
+        stage ('Promote to QA'){
             agent{label'slave02'}
             steps {
                 //docer
                 echo 'Hello'
             }
         }
-        stage ('Test'){
+        /*stage ('Test'){
             steps {
                 echo 'Run end to end test.'
                 sh 'exit 0'
