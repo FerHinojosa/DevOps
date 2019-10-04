@@ -26,11 +26,6 @@ pipeline {
                                 reportName: 'Unit TestHTML Report', 
                                 reportTitles: ''])
                 }
-                /*failure {
-                    emailext body: 'Hello', 
-                    subject: 'Failure', 
-                    to: 'fernando.hinojosa@live.com'
-                }*/
                 success {
                   archiveArtifacts 'build/libs/*.jar'
                   stash includes: 'build/libs/*.jar', name: 'package_build'
@@ -108,7 +103,7 @@ pipeline {
         }
         success {
             echo 'Execute when it success'
-        }
-    }*/
+        }*/
+    }
     
 }  
