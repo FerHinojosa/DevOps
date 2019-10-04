@@ -109,6 +109,6 @@ pipeline {
         success {
             echo 'Execute when it success'
         }
-    }
+    }*/
     
 }  
