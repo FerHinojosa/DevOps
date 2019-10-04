@@ -37,18 +37,16 @@ pipeline {
             steps {
                 sh 'chmod +x gradlew'
                 sh './gradlew sonarqube \
-                -Dsonar.projectKey=jenkinsdev \
-                -Dsonar.organization=fernando \
+                -Dsonar.projectKey=FerHinojosa_DevOps \
+                -Dsonar.organization=ferhinojosa \
                 -Dsonar.host.url=https://sonarcloud.io \
-                -Dsonar.login=2cd00e82725ac78e674ec563f439aad707051d54'
+                -Dsonar.login=62a479ec2b7172fa65c868d0acac404f4f969da9'
             }
         }
         stage ('Deploy to Dev'){
             agent{label'master'}
             steps {
                 unstash 'package_build'
-                sh 'pwd'
-                sh 'ls -la'
                 sh 'docker-compose up'
                 sh 'docker-compose down || true'                
             }
