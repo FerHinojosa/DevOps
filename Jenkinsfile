@@ -54,13 +54,13 @@ pipeline {
         stage ('Run Smoke Tests'){
             steps {
                 echo 'Run Smoke Testing!!'
-                catchError (){
-                    exit 0
-                }
-                
+                exit 0
             }
         }
-        /*stage ('Docker Build'){
+        /*catchError (){
+                    exit 0
+                }
+        stage ('Docker Build'){
             agent{label'master'}
             when {
                 anyOf{
