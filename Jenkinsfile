@@ -65,6 +65,7 @@ pipeline {
                 }
             }
             steps{
+                unstash 'package_build'
                 sh 'docker build -t ${DOCKER_ID}:v1.${BUILD_NUMBER} .'
                 sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
                 sh "docker push ${DOCKER_ID}:v1.${BUILD_NUMBER}"
