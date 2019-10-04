@@ -41,10 +41,10 @@ pipeline {
         stage ('Code Quality'){
             steps {
                 sh 'chmod +x gradlew'
-                sh './gradlew sonarqube 
-                -Dsonar.projectKey=jenkinsdev 
-                -Dsonar.organization=fernando 
-                -Dsonar.host.url=https://sonarcloud.io 
+                sh './gradlew sonarqube \
+                -Dsonar.projectKey=jenkinsdev \
+                -Dsonar.organization=fernando \
+                -Dsonar.host.url=https://sonarcloud.io \
                 -Dsonar.login=2cd00e82725ac78e674ec563f439aad707051d54'
             }
         }
