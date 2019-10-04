@@ -33,7 +33,7 @@ pipeline {
                 }*/
                 success {
                   archiveArtifacts 'build/libs/*.jar'
-                  stash includes: '**/*/*.jar', name: 'package_build'
+                  stash includes: 'build/libs/*.jar', name: 'package_build'
                   sh 'pwd'
                 }
             }
@@ -41,7 +41,11 @@ pipeline {
         stage ('Code Quality'){
             steps {
                 sh 'chmod +x gradlew'
-                sh './gradlew sonarqube -Dsonar.projectKey=jenkinsdev -Dsonar.organization=fernando -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=2cd00e82725ac78e674ec563f439aad707051d54'
+                sh './gradlew sonarqube 
+                -Dsonar.projectKey=jenkinsdev 
+                -Dsonar.organization=fernando 
+                -Dsonar.host.url=https://sonarcloud.io 
+                -Dsonar.login=2cd00e82725ac78e674ec563f439aad707051d54'
             }
         }
         stage ('Deploy to Dev'){
@@ -54,7 +58,7 @@ pipeline {
                 sh 'docker-compose down || true'                
             }
         }
-        stage ('Run Smoke Tests'){
+        /*stage ('Run Smoke Tests'){
             steps {
                 echo 'Run Smoke Testing!!'
                 catchError (){
