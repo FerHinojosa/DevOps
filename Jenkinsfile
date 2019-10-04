@@ -51,16 +51,16 @@ pipeline {
                 sh 'docker-compose down || true'                
             }
         }
-        /*stage ('Run Smoke Tests'){
+        stage ('Run Smoke Tests'){
             steps {
                 echo 'Run Smoke Testing!!'
                 catchError (){
-                    exit 1
+                    exit 0
                 }
                 
             }
         }
-        stage ('Docker Build'){
+        /*stage ('Docker Build'){
             agent{label'master'}
             when {
                 anyOf{
