@@ -47,7 +47,7 @@ pipeline {
             agent{label'master'}
             steps {
                 unstash 'package_build'
-                sh 'docker-compose up'
+                sh 'docker-compose up -d'
                 sh 'docker-compose down || true'                
             }
         }
