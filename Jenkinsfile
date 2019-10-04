@@ -54,12 +54,9 @@ pipeline {
         stage ('Run Smoke Tests'){
             steps {
                 echo 'Run Smoke Testing!!'
-                //exit 0
+                exit 1
             }
         }
-        /*catchError (){
-                    exit 0
-                }
         stage ('Docker Build'){
             agent{label'master'}
             when {
@@ -74,7 +71,7 @@ pipeline {
                 sh 'docker images' 
             }
         }
-        stage ('Promote to QA'){
+        /*stage ('Promote to QA'){
             agent{label'slave02'}
             steps {
                 //docer
