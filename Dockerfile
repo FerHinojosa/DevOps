@@ -1,8 +1,4 @@
-FROM gato756/awt04webservice_1.0:1.0
-WORKDIR /AWT04-WebService/
-RUN ./gradlew build
-RUN ls -al
-RUN pwd
-COPY ./jar ./AWT04-WebService
-#ADD jar/WebService-1.0-SNAPSHOT.jar /AWT04-WebService/WebService-1.0-SNAPSHOT.jar
-#ENTRYPOINT ["java","-jar","/AWT04-WebService/WebService-1.0-SNAPSHOT.jar"]
+FROM openjdk:11.0.4
+LABEL maintainer = Fernando Hinojosa (Fernando.Hinojosa@fundacion-jala.org)
+COPY build/libs/*.jar /tmp/
+ENTRYPOINT ["java","-jar","/tmp/jenkins-FerH.jar"]

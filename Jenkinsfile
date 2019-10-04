@@ -1,108 +1,112 @@
 pipeline {
-    agent any
+    agent{label'master'}
     environment {
-        //Docker credentials
-        DOCKER_USER_NAME = 'gato756'
-        DOCKER_PASSWORD = 'Bichito123'
-        //New tag for docker
-        DOCKER_TAG_NEW = '1.1'
-        DOCKER_TAG_CURRENT = '1.0'
-        //DOCKER_TAG_CURRENT = 'latest'
-        //Docker repository
-        DOCKER_REPOSITORY = 'gato756/awt04webservice_1.0'
-        TAG = VersionNumber projectStartDate: '09/23/2019', versionNumberString: '${BUILD_NUMBER}', versionPrefix: 'v1.', worstResultForIncrement: 'FAILURE'
+        DOCKER_USERNAME = '5917362014'
+        DOCKER_PASSWORD = '0123456789'
+        DOCKER_ID = '5917362014/webserver'//rename
     }
     stages {
-        stage('Build') {
+        stage ('Build') {
             agent {
-                docker { image '${DOCKER_REPOSITORY}:${DOCKER_TAG_CURRENT}' }
+                docker {image 'openjdk:11.0.4'}
             }
             steps {
-                sh 'printenv'
                 sh 'chmod +x gradlew'
                 sh './gradlew build'
-                sh 'echo ${NODE_NAME}'
+                sh 'pwd'
             }
-            post {
+            post{
                 always {
                     junit 'build/test-results/test/*.xml'
-                    archiveArtifacts 'build/libs/*.jar'
-                    sh 'ls -al'
-                    sh 'pwd'
+                    publishHTML([allowMissing: false, 
+                                alwaysLinkToLastBuild: false, 
+                                keepAll: false, 
+                                reportDir: 'build/reports/tests/test', 
+                                reportFiles: 'index.html', 
+                                reportName: 'Unit TestHTML Report', 
+                                reportTitles: ''])
+                }
+                /*failure {
+                    emailext body: 'Hello', 
+                    subject: 'Failure', 
+                    to: 'fernando.hinojosa@live.com'
+                }*/
+                success {
+                  archiveArtifacts 'build/libs/*.jar'
+                  sh 'pwd'
                 }
             }
         }
-        stage('SonarCloud') {
+        stage ('Code Quality'){
             steps {
                 sh 'chmod +x gradlew'
-                //sh './gradlew sonarqube -Dsonar.projectKey=andybazualdo -Dsonar.organization=andybazualdo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=16e96c988a578b8f8dd2b8bf381c19fcc11194f3'
+                sh './gradlew sonarqube -Dsonar.projectKey=jenkinsdev -Dsonar.organization=fernando -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=2cd00e82725ac78e674ec563f439aad707051d54'
             }
         }
-        stage('Copy Artifacts') {
-            steps {
-                sh 'echo Start Coping .......'
-                sh 'ls -al'
-                sh 'pwd'
-                copyArtifacts fingerprintArtifacts: true, parameters: 'build/libs*.jar', projectName: '${JOB_NAME}', selector: lastWithArtifacts(), target: './jar'
-                //sh 'ls -al jar'
-                //sh 'docker ps -a'
-            }
-        }
-        stage('Docker push develop') {
-            when { branch "develop" }
-            steps {
-                sh 'ls -al'
-                sh 'pwd'
-                sh 'echo Start updating to docker hub .......'
-                sh 'echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USER_NAME} --password-stdin'
-                sh 'docker build -t ${DOCKER_REPOSITORY}:DEVELOP-${TAG} .'
-                sh 'docker push ${DOCKER_REPOSITORY}:DEVELOP-${TAG}'
-            }
-        }
-        stage('Docker push master') {
-            when { branch "master" }
-            steps {
-                sh 'ls -al'
-                sh 'pwd'
-                sh 'echo Start updating to docker hub .......'
-                sh 'echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USER_NAME} --password-stdin'
-                sh 'docker build -t ${DOCKER_REPOSITORY}:${TAG} .'
-                sh 'docker push ${DOCKER_REPOSITORY}:${TAG}'
-            }
-        }
-        stage('Deploy to development'){
+        stage ('Deploy to Dev'){
             agent{label'master'}
-            steps{
-                sh 'echo ${NODE_NAME}'
-                sh 'echo deploying into development .......'
-            }
-        }        
-        stage('Unit test'){
-            steps{
-                sh 'echo executing Unit tests .......'
-            }
-        }
-        stage('Promote to QA'){
-            agent{label'slave01'}
-            steps{
-                sh 'docker ps -a'
-                sh 'echo deploying into QA enviroment .......'
+            steps {
+                copyArtifacts filter: '**/*/*.jar', 
+                fingerprintArtifacts: true, 
+                projectName: '${JOB_NAME}',
+                selector: lastWithArtifacts()
+                sh 'pwd'
+                sh 'ls -la'
+                sh 'docker-compose up'
+                sh 'docker-compose down || true'                
             }
         }
-        stage('Tests'){
+        stage ('Run Smoke Tests'){
+            steps {
+                echo 'Run Smoke Testing!!'
+                catchError (){
+                    exit 1
+                }
+                
+            }
+        }
+        stage ('Docker Build'){
+            agent{label'master'}
+            when {
+                anyOf{
+                    branch 'master'; branch 'develop'
+                }
+            }
             steps{
-                sh 'echo  making test.......'
+                sh 'docker build -t ${DOCKER_ID}:v1.${BUILD_NUMBER} .'
+                sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
+                sh "docker push ${DOCKER_ID}:v1.${BUILD_NUMBER}"
+                sh 'docker images' 
+            }
+        }
+        stage ('Promote to QA'){
+            agent{label'slave02'}
+            steps {
+                //docer
+                echo 'Hello'
+            }
+        }
+        stage ('Test'){
+            steps {
+                echo 'Run end to end test.'
+                sh 'exit 0'
             }
         }
     }
-    post{
-       failure {
-            emailext attachLog: true, compressLog: true, body: 'The process to generate a new verion of ${GIT_BRANCH}. Log with the info is attached ',
+    post {
+        always {
+            //sh 'docker-compose down || true'
+            echo 'Execute when it success'
+        }
+        failure {
+            cleanWs deleteDirs: true, notFailBuild: true
+            emailext attachLog: true, compressLog: true, body: 'The process to generate a new verion of ${BRANCH_NAME}. Log with the info is attached ',
                      subject: 'Build Notification: ${JOB_NAME}-Build# ${BUILD_NUMBER} ${currentBuild.result}',
                      to: 'fernando.hinojosa@live.com'
         }
-        always {
-            cleanWs deleteDirs: true, notFailBuild: true
+        success {
+            echo 'Execute when it success'
         }
     }
-}
+    
+}  
