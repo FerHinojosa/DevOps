@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: 5917362014/webserver:v1.25
+    image: '${DOCKER_ID}:v1.${BUILD_NUMBER}'
     links: 
       - db
     ports:
