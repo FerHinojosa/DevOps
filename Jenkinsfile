@@ -76,7 +76,7 @@ pipeline {
             agent{label'slave02'}
             steps {
                 unstash 'package_build'
-                sh 'docker-compose up -d'
+                sh 'docker-compose -f docker-composePromote.yml up -d'
             }
         }
         /*stage ('Test'){
