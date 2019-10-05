@@ -79,7 +79,7 @@ pipeline {
                 sh 'docker-compose -f docker-composePromote.yml up -d'
             }
         }
-        /*stage ('Test'){
+        stage ('Test'){
             steps {
                 echo 'Run end to end test.'
                 sh 'exit 0'
@@ -88,7 +88,8 @@ pipeline {
     }
     post {
         always {
-            //sh 'docker-compose down || true'
+            sh 'docker-compose down || true'
+            sh 'docker-compose -f docker-composePromote.yml down'
             echo 'Execute when it success'
         }
         failure {
