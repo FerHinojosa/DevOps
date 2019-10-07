@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh 'chmod +x gradlew'
                 sh './gradlew build'
-                sh 'pwd'
+          
             }
             post{
                 always {
@@ -29,7 +29,7 @@ pipeline {
                 success {
                   archiveArtifacts 'build/libs/*.jar'
                   stash includes: 'build/libs/*.jar', name: 'package_build'
-                  sh 'pwd'
+          
                 }
             }
         }
@@ -54,7 +54,7 @@ pipeline {
         stage ('Run Smoke Tests'){
             steps {
                 echo 'Run Smoke Testing!!'
-                sh 'exit 1'
+                sh 'exit 0'
             }
         }
         stage ('Docker Build'){
