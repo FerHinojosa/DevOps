@@ -54,7 +54,7 @@ pipeline {
         stage ('Run Smoke Tests'){
             steps {
                 echo 'Run Smoke Testing!!'
-                sh 'exit 0'
+                sh 'exit 1'
             }
         }
         stage ('Docker Build'){
